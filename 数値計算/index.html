@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+ <meta charset="UTF-8">
+ <title>数値計算レポート２</title>
+ <link rel="stylesheet" href="style.css">
+<script src="nibun.js"></script>
+ <script src="newton.js"></script>
+</head>
+<body>
+    <div id="contents">
+        <div id="panel">
+          <div>
+            <button type="button" id="start" class="normal" onclick="clickBtn()">start</button>
+            <button type="button" id="clear" class="normal" onclick="window.location.reload();">clear</button>
+            <p id="zero">0</p>
+            <p id="one">1</p>
+          </div>
+          <div >
+            <select id="kaihou">
+              <option value="nibun">二分法</option>  
+              <option value="newton">ニュートン法</option> 
+            </select>
+           
+          </div>
+          <div>
+            <p>試行回数 : <span id="sikou"></span></p>
+            <button type="button" id="b02" class="size" onclick="Setnum()">1,000</button>
+            <button type="button" id="b03" class="size" onclick="Setnum2()">10,000</button>
+            <button type="button" id="b04" class="size" onclick="Setnum3()">100,000</button>
+            <button type="button" id="b05" class="size" onclick="Setnum4()">1,000,000</button>
+          </div>
+          <div>
+            <p>EPS : <span id="eps"></span></p>
+            <button type="button" id="d02" class="size" onclick="Seteps()">0.001</button>
+            <button type="button" id="d03" class="size" onclick="Seteps2()">0.0001</button>
+            <button type="button" id="d04" class="size" onclick="Seteps3()">0.00001</button>
+            <button type="button" id="d05" class="size" onclick="Seteps4()">0.000001</button>
+          </div>
+          <p id="theory"></p>
+          <p id="answer"></p>
+        </div>
+        <!--<div id="main">
+            <div id="area1" class="area">
+              <p>　グラフの様子</p>
+            <svg width=500 height=500>
+                <line x1=0 y1=200 x2=450 y2=200 stroke="black" />
+                <line X1=225 y1=-50 x2=225 y2=400 stroke="black" />
+                <line x1=0 y1=0 x2=200 y2=200 stroke="blue" transform="translate(200,200)scale(1,-1)" />
+            </svg>
+              <canvas class="myCanvas" id="graph1" width="450" height="450"></canvas>
+              <canvas class="myCanvas" id="graph1b" width="450" height="450"></canvas>
+            </div>
+    
+           <div id="area2" class="area">
+              <p>　計算された面積・体積</p>
+              <canvas class="myCanvas" id="graph2" width="460" height="240"></canvas>
+              <canvas class="myCanvas" id="graph2b" width="460" height="240"></canvas>
+            </div>
+        </div>-->
+
+ <script>
+
+
+document.write('<svg width=400 height=400>');
+document.write('<line x1=0 y1=200 x2=400 y2=200 stroke="black" /><line x1=200 y1=0 x2=200 y2=400 stroke="black" /><line x1=270 y1=0 x2=270 y2=400 stroke="black" />');
+//document.write('<circle cx="10" cy="20" r="10" fill="#2b2b2b"/>')
+
+let x1 = -5, y1, x2, y2;
+let a = 1, b = 0; // y=ax^2+b の a,b の値
+
+for(let i=0; i < 100; i++) { //処理を100回繰り返し
+
+  y1 = a * x1 * x1 + b;    //始点のy座標を求める
+  //始点のx座標より0.1大きい値を終点のx座標とする
+  x2 = x1 + 0.1;
+  y2 = a * x2 * x2 + b;    //終点のy座標を求める
+
+  //始点と終点の座標をもとに直線を引く
+  document.write('<g transform="translate(200,200)scale(40,-40)"><line x1='+x1+' y1='+y1+' x2='+x2+' y2='+y2+' stroke="blue" stroke-width="0.05"/></g>');
+
+  x1 = x2;    //終点のx座標を次の始点のx座標とする
+
+};
+
+document.write('</svg>');
+
+function clickBtn(){
+  way = document.getElementById("theory");
+  const kai = document.getElementById("kaihou").value;
+  way.innerText = kai;
+
+if(kai == "nibun"){
+  LoadNibun();
+}else if(kai == "newton"){
+  LoadNewton();
+}
+
+
+}
+
+function Setnum(){
+answer = document.getElementById("sikou");
+text = document.getElementById("b02").textContent;
+answer.innerText = text;
+
+}
+
+function Setnum2(){
+answer = document.getElementById("sikou");
+text = document.getElementById("b03").textContent;
+answer.innerText = text;
+
+}
+
+function Setnum3(){
+answer = document.getElementById("sikou");
+text = document.getElementById("b04").textContent;
+answer.innerText = text;
+
+}
+
+function Setnum4(){
+answer = document.getElementById("sikou");
+text = document.getElementById("b05").textContent;
+answer.innerText = text;
+
+}
+
+function Seteps(){
+  answer = document.getElementById("eps");
+text = document.getElementById("d02").textContent;
+answer.innerText = text;
+}
+
+function Seteps2(){
+  answer = document.getElementById("eps");
+text = document.getElementById("d03").textContent;
+answer.innerText = text;
+}
+
+function Seteps3(){
+  answer = document.getElementById("eps");
+text = document.getElementById("d04").textContent;
+answer.innerText = text;
+}
+
+function Seteps4(){
+  answer = document.getElementById("eps");
+text = document.getElementById("d05").textContent;
+answer.innerText = text;
+}
+
+
+ </script>
+ 
+</body>
+</html>
